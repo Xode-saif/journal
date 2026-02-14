@@ -3,7 +3,6 @@ import type { NextRequest } from "next/server";
 
 export function proxy(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
-
   const protectedPaths = ["/home","/tools","/rules","dashboard"];
 
   const isProtected = protectedPaths.some(path =>

@@ -19,7 +19,7 @@ export class AuthController {
             }
             const userExists = await UserModel.findByEmail(email)
             if (userExists) {
-                return Response.json({ statusCode: 400, isSuccess: false, message: 'User already exists' })
+                return Response.json({ statusCode: 409, isSuccess: false, message: 'User already exists' })
             }
             const hashPassword = await Bun.password.hash(password.toString()) // default encryption is argon2id
             UserModel.createUser(name, email, hashPassword)
@@ -40,22 +40,29 @@ export class AuthController {
             if (!user) {
                 return Response.json({ statusCode: 400, isSuccess: false, message: "User not found with this email" })
             }
-            const passwordMatch = await Bun.password.verify(password.toString(),user.password);
+            const passwordMatch = await Bun.password.verify(password.toString(), user.password);
             if (!process.env.JWT_SECRET) {
                 throw new Error("JWT_SECRET is not defined");
             }
             if (!passwordMatch) {
-                return Response.json({statusCode:400,isSuccess:false,message:"Incorrect password"});
+                return Response.json({ statusCode: 400, isSuccess: false, message: "Incorrect password" });
             }
             const token = jwt.sign({
                 id: user.userId,
                 email: user.email,
 
             }, process.env.JWT_SECRET, { expiresIn: '1h' })
-            return Response.json({
-                statusCode: 200,
-                isSuccess: true,
-                token
+            // return Response.json({
+            //     statusCode: 200,
+            //     isSuccess: true,
+            //     token
+            // });
+            return new Response(JSON.stringify({statusCode: 200, isSuccess: true, message: "Logged in" }), {
+                status: 200,
+                headers: {
+                    "Set-Cookie": `token=${token}; HttpOnly; Path=/; Max-Age=3600; SameSite=Lax`,
+                    "Content-Type": "application/json",
+                },
             });
         } catch (error) {
             console.error("Login error:", error);

@@ -20,7 +20,7 @@ const Cal = () => {
         setAddTradePopup(true)
     }
     return (
-        <div className='flex flex-col sm:flex-row justify-center items-center gap-2 md:gap-[200px] w-full'>
+        <div className='flex flex-col sm:flex-row justify-center items-center gap-5 md:gap-50 w-full'>
             <Calendar
                 className="rounded-lg border md:h-lg md:w-lg"
                 mode="single"
@@ -28,7 +28,7 @@ const Cal = () => {
                 onSelect={setDate}
                 captionLayout="dropdown"
             />
-            <div className='md:h-lg md:w-md'>
+            <div className='w-[80%] md:h-lg md:w-md'>
                 <Card className="mx-auto w-full max-w-sm p-2">
                     <Button variant="outline" className="w-full" onClick={handlePopupToogle}>
                         <Plus />Add

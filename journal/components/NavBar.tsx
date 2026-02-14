@@ -48,7 +48,7 @@ const NavBar = () => {
           <a href='#' className='flex shrink-0 shadow-xl rounded-full bg-zinc-300 p-4'>
             {/* <Logo className='text-foreground gap-3' /> */}
             <div className=''>
-                <span className='rounded-full font-bold text-black'>FT</span>
+                <span className='rounded-full font-bold text-black'>FTJ</span>
             </div>
           </a>
           <a href='#' className='hover:text-primary max-md:hidden'>
