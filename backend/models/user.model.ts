@@ -12,6 +12,6 @@ export const UserModel ={
     },
 
     async createUser(name:string,email:string,password:string){
-        return userCollection().insertOne({name,email,password,userId:crypto.randomUUID()});
+        return userCollection().insertOne({name,email,password,userId:crypto.randomUUID(),createdAt:new Date()});
     }
 }

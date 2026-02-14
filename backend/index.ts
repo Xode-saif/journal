@@ -1,5 +1,6 @@
 import { connectDB } from "./config/db";
 import { apiRouter } from "./routes/api/trades";
+import { authRouter } from "./routes/auth/authRoute";
 
 await connectDB()
 const server = Bun.serve({
