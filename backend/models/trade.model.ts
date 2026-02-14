@@ -4,7 +4,7 @@ import { getDB } from "../config/db"
 
 
 export function tradesCollection(){
-    return getDB().collection<TradeSchema>('trades')
+  return getDB().collection<TradeSchema>('trades')
 } 
 
 export const TradeModel = {

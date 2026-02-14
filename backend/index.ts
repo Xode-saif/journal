@@ -9,6 +9,9 @@ const server = Bun.serve({
     const path = url.pathname
 
     try {
+      if(path.startsWith("/auth")){
+        return authRouter(req);
+      }
       if (path.startsWith("/api")) {
         return apiRouter(req)
       }

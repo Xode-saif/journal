@@ -1,10 +1,12 @@
-import Cal from "@/components/Cal";
+import Cal from '@/components/Cal'
+import React from 'react'
 
-export default function Home() {
+const HomePage = () => {
   return (
     <div className="flex min-h-screen min-w-screen items-center justify-center bg-zinc-50 font-sans px-2">
-      <h1>main page</h1>
+      <Cal/>
     </div>
-  );
+  )
 }
 
+export default HomePage
