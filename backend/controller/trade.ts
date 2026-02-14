@@ -1,17 +1,38 @@
-type Trade = {
-  id: string
-  pair: string
-  price: number
-}
+import { TradeModel } from "../models/trade.model";
+import type { TradeSchema } from "../schemas/trade";
 
-const trades: Trade[] = [] //relace with db
-export function trade(req: Request, id?: string){
-    const method = req.method;
-    if(method === 'GET'){
-        return Response.json({data:"124321"})
+export default class TradeController{
+    constructor(){
+
     }
-    if(method === 'POST'){
-        
+    allTrade = async()=>{
+        return TradeModel.findAll()
     }
-    return Response.json({error:"No request method"})
+    
+    createTrade = async(req: Request)=>{
+        // console.log(data,'trade data');
+        try {
+            const fileData = await req.formData();
+            const pair = fileData.get("pair") as string;
+            const price = Number(fileData.get("price"));
+            const file = fileData.get('image') as File;
+            let buffer: Buffer | undefined;
+            //conver file to buffer
+            if(file){
+                const arrayBuffer = await file.arrayBuffer();
+                buffer = Buffer.from(arrayBuffer);
+                console.log(buffer,'file buffer');
+            } 
+            const tradeData: TradeSchema = {
+                pair,
+                price,
+                image: buffer,
+                createdAt: new Date()
+            };
+            console.log(tradeData,'trade data with buffer')
+            return TradeModel.create(tradeData);
+        } catch (error) {
+            console.error("Error in createTrade:",error);
+        }
+    }
 }

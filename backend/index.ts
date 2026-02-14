@@ -1,7 +1,7 @@
 import { connectDB } from "./config/db";
 import { apiRouter } from "./routes/api/trades";
 
-// await connectDB()
+await connectDB()
 const server = Bun.serve({
   port: Number(process.env.PORT) || 3000,
   fetch(req) {

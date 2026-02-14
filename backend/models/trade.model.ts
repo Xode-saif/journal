@@ -1,31 +1,28 @@
 import { ObjectId } from "mongodb"
+import { type TradeSchema } from "../schemas/trade"
 import { getDB } from "../config/db"
 
-export interface Trade {
-  _id?: ObjectId
-  pair: string
-  price: number
-  createdAt: Date
-}
 
-const collection = () => getDB().collection<Trade>("trades")
+export function tradesCollection(){
+    return getDB().collection<TradeSchema>('trades')
+} 
 
 export const TradeModel = {
   async findAll() {
-    return collection().find().toArray()
+    return tradesCollection().find().toArray()
   },
 
   async findById(id: string) {
-    return collection().findOne({ _id: new ObjectId(id) })
+    return tradesCollection().findOne({ _id: new ObjectId(id) })
   },
 
-  async create(data: Omit<Trade, "_id">) {
-    const result = await collection().insertOne(data)
+  async create(data: Omit<TradeSchema, "_id">) {
+    const result = await tradesCollection().insertOne(data)
     return { _id: result.insertedId, ...data }
   },
 
-  async update(id: string, data: Partial<Trade>) {
-    await collection().updateOne(
+  async update(id: string, data: Partial<TradeSchema>) {
+    await tradesCollection().updateOne(
       { _id: new ObjectId(id) },
       { $set: data }
     )
@@ -33,6 +30,6 @@ export const TradeModel = {
   },
 
   async delete(id: string) {
-    return collection().deleteOne({ _id: new ObjectId(id) })
+    return tradesCollection().deleteOne({ _id: new ObjectId(id) })
   },
 }
