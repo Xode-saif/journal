@@ -1,27 +1,27 @@
 'use client'
 import React, { useState } from 'react'
 import { Calendar } from "@/components/ui/calendar"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { enUS } from "date-fns/locale"
+import { Card } from "@/components/ui/card"
 import { Button } from './ui/button'
 import { Plus } from 'lucide-react'
 import AddTrade from './AddTrade'
+import { format } from 'date-fns'
 const Cal = () => {
     const [date, setDate] = React.useState<Date | undefined>(new Date())
-    const [addTradePopup,setAddTradePopup] = useState<boolean>(false);
-    const handlePopupToogle = (e:React.MouseEvent<HTMLButtonElement>)=>{
+    const [addTradePopup, setAddTradePopup] = useState<boolean>(false);
+    const handlePopupToogle = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setAddTradePopup(true)
     }
     return (
         <div className='flex flex-col sm:flex-row justify-center items-center gap-5 md:gap-50 w-full'>
             <Calendar
+                locale={enUS}
+                formatters={{
+                    formatMonthDropdown: (date) =>
+                        format(date, "MMM", { locale: enUS }),
+                }}
                 className="rounded-lg border md:h-lg md:w-lg"
                 mode="single"
                 selected={date}
@@ -34,7 +34,7 @@ const Cal = () => {
                         <Plus />Add
                     </Button>
                     {
-                        addTradePopup && <AddTrade visible={addTradePopup} onCancel={()=>setAddTradePopup(false)}/>
+                        addTradePopup && <AddTrade visible={addTradePopup} onCancel={() => setAddTradePopup(false)} />
                     }
                 </Card>
             </div>

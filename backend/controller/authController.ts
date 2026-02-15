@@ -57,7 +57,7 @@ export class AuthController {
             //     isSuccess: true,
             //     token
             // });
-            return new Response(JSON.stringify({statusCode: 200, isSuccess: true, message: "Logged in" }), {
+            return new Response(JSON.stringify({ statusCode: 200, isSuccess: true, message: "Logged in" }), {
                 status: 200,
                 headers: {
                     "Set-Cookie": `token=${token}; HttpOnly; Path=/; Max-Age=3600; SameSite=Lax`,
@@ -69,4 +69,30 @@ export class AuthController {
             return Response.json({ statusCode: 500, isSuccess: false, message: "Login failed" });
         }
     }
+
+    logoutUser = async (req:Request) => {
+        try {
+            return new Response(
+                JSON.stringify({
+                    statusCode: 200,
+                    isSuccess: true,
+                    message: "Logged out successfully",
+                }),
+                {
+                    status: 200,
+                    headers: {
+                        "Set-Cookie": "token=; HttpOnly; Path=/; Max-Age=0; SameSite=Lax",
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+        } catch (error) {
+            return Response.json({
+                statusCode: 500,
+                isSuccess: false,
+                message: "Logout failed",
+            });
+        }
+    };
+
 }

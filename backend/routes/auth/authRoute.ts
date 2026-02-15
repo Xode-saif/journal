@@ -12,5 +12,8 @@ export async function authRouter(req:Request){
     if(method === "POST" && path === '/register'){
         return authController.registerUser(req);
     }
+    if(method === "POST" && path === '/logout'){
+        return authController.logoutUser(req);
+    }
     return new Response("API Not Found", { status: 404 })
 }

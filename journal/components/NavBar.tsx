@@ -1,4 +1,5 @@
-import { MenuIcon, SearchIcon } from 'lucide-react'
+"use client"
+import { LogOut, MenuIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -8,6 +9,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
+import Link from 'next/link'
+import { logoutUser } from '@/apis/apicalls';
+interface NavBarProps{
+  isLogedIn:boolean;
+}
 type NavigationItem = {
   title: string
   href: string
@@ -15,7 +21,7 @@ type NavigationItem = {
 const navigationData:NavigationItem = [
   {
     title: 'Home',
-    href: '#'
+    href: '/home'
   },
   {
     title: 'Products',
@@ -34,14 +40,20 @@ const navigationData:NavigationItem = [
 
 
 
-const NavBar = () => {
+const NavBar = ({isLogedIn}:NavBarProps) => {
+  const handleLogout = async()=>{
+    const res = await logoutUser()
+    if(res.isSuccess && res.statusCode === 200){
+      window.location.href = "/login";
+    }
+  }
   return (
     <header className='bg-background sticky top-0 z-50'>
       <div className='mx-auto flex max-w-7xl items-center justify-between gap-8 px-4 py-2 sm:px-6'>
         <div className='text-muted-foreground flex flex-1 items-center gap-8 font-medium md:justify-center lg:gap-16'>
-          <a href='#' className='hover:text-primary max-md:hidden'>
+          <Link href='/home' className='hover:text-primary max-md:hidden'>
             Home
-          </a>
+          </Link>
           <a href='#' className='hover:text-primary max-md:hidden'>
             Tools
           </a>
@@ -60,6 +72,9 @@ const NavBar = () => {
         </div>
 
         <div className='flex items-center gap-6'>
+          {
+            isLogedIn && <Button variant="default" size="icon" onClick={handleLogout}><LogOut /></Button>
+          }
           {/* <Button variant='ghost' size='icon'>
             <SearchIcon />
             <span className='sr-only'>Search</span>

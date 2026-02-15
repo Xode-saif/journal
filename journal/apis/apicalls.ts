@@ -72,6 +72,10 @@ export const loginUser = async(email:string,password:string)=>{
     const response = await fetchPost("/auth/login",{email,password});
     return response;
 }
+export const logoutUser = async()=>{
+    const res = await fetchPost("/auth/logout",null);
+    return res;
+}
 export const registerUser = async(name:string,email:string,password:string)=>{
     const response = await fetchPost("/auth/register",{name,email,password});
     return response;
