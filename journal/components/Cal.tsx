@@ -34,7 +34,7 @@ const Cal = () => {
                         <Plus />Add
                     </Button>
                     {
-                        addTradePopup && <AddTrade visible={addTradePopup} onCancel={() => setAddTradePopup(false)} />
+                        addTradePopup && <AddTrade visible={addTradePopup} onCancel={() => setAddTradePopup(false)} selectedDate={date} />
                     }
                 </Card>
             </div>

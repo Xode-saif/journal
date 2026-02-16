@@ -23,13 +23,14 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<"div">) {
   const router = useRouter();
-  const handleLogin =  async (e:HTMLFormElement)=>{
+  const handleLogin =  async (e: React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+    const formData = new FormData(e.currentTarget as HTMLFormElement);
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
     const response = await loginUser(email,password);
     if(response.statusCode === 200 && response.isSuccess){
+      router.refresh();
       router.replace("/home")
     }
 

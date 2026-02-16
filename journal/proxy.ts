@@ -8,7 +8,16 @@ export function proxy(request: NextRequest) {
   const isProtected = protectedPaths.some(path =>
     request.nextUrl.pathname.startsWith(path)
   );
-
+  if (request.nextUrl.pathname === "/") {
+    if (token) {
+      return NextResponse.redirect(new URL("/home", request.url))
+    } else {
+      return NextResponse.redirect(new URL("/login", request.url))
+    }
+  }
+  if (request.nextUrl.pathname === "/login" && token) {
+    return NextResponse.redirect(new URL("/home", request.url))
+  }
   if (isProtected && !token) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
