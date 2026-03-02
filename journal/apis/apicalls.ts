@@ -80,3 +80,6 @@ export const registerUser = async(name:string,email:string,password:string)=>{
     const response = await fetchPost("/auth/register",{name,email,password});
     return response;
 }
+export const addTrade = async()=>{
+    const response = await fetchPost("/api/")
+}

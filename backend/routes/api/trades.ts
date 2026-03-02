@@ -1,9 +1,14 @@
 
 import type { TradeSchema } from "../../schemas/trade";
 import TradeController from "../../controller/trade"
-
+interface AuthenticatedRequest extends Request {
+  user: {
+    id: string;
+    email: string;
+  };
+}
 const tradeController = new TradeController();
-export async function apiRouter(req: Request): Promise<Response> {
+export async function apiRouter(req: AuthenticatedRequest): Promise<Response> {
   const url = new URL(req.url)
   const path = url.pathname.replace("/api", "") // remove prefix
   const method = req.method;
@@ -12,9 +17,10 @@ export async function apiRouter(req: Request): Promise<Response> {
     return Response.json({ message: "API root" })
   }
 
-  if(method==='GET' && path ==='/alltrades'){
+  if(method==='GET' && path ==='/trades'){
     console.log('fetching all trades...')
-    const allTrades = await tradeController.allTrade()
+    const userId = req.user.id;
+    const allTrades = await tradeController.allTrade(userId)
     console.log(allTrades,'all trades')
     return Response.json({statusCode:200,isSuccess:true,data:allTrades})
   }

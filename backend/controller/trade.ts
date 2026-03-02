@@ -5,12 +5,12 @@ export default class TradeController{
     constructor(){
 
     }
-    allTrade = async()=>{
-        return TradeModel.findAll()
+    allTrade = async(userId:string)=>{
+        return TradeModel.findById(userId)
     }
     
     createTrade = async(req: Request)=>{
-        // console.log(data,'trade data');
+        console.log(req,'trade data');
         try {
             const fileData = await req.formData();
             const pair = fileData.get("pair") as string;
@@ -20,7 +20,7 @@ export default class TradeController{
             //conver file to buffer
             if(file){
                 const arrayBuffer = await file.arrayBuffer();
-                buffer = Buffer.from(arrayBuffer);
+                buffer = Buffer.from(arrayBuffer); //make it base64
                 console.log(buffer,'file buffer');
             } 
             const tradeData: TradeSchema = {

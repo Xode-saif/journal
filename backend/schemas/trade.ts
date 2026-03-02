@@ -4,6 +4,7 @@ import type { ChartSS } from "./chartss";
 
 export interface TradeSchema{
     _id?: ObjectId
+    // userId:string;
     pair: string
     price: number
     ChartSS?:ChartSS

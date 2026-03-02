@@ -14,6 +14,9 @@ export async function connectDB() {
   try {
     await client.connect()
     db = client.db(DB_NAME)
+    await db.collection("trades").createIndex(
+      { userId: 1, createdAt: -1 }
+    )
     console.log("✅ MongoDB connected")
   } catch (error) {
     console.error("MongoDB connection failed:", error)

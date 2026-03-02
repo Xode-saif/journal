@@ -1,10 +1,12 @@
 import { connectDB } from "./config/db";
+import authMiddleware from "./middleware/auth";
 import { apiRouter } from "./routes/api/trades";
 import { authRouter } from "./routes/auth/authRoute";
 
 await connectDB()
+const protectedApiRouter = authMiddleware(apiRouter);
 const server = Bun.serve({
-  port: Number(process.env.PORT) || 3000,
+  port: Number(process.env.PORT) || 8000,
   async fetch(req) {
     const url = new URL(req.url)
     const path = url.pathname
@@ -26,7 +28,7 @@ const server = Bun.serve({
       if(path.startsWith("/auth")){
         response = await authRouter(req);
       } else if (path.startsWith("/api")) {
-        response = await apiRouter(req)
+        response = await protectedApiRouter(req)
       } else {
         return new Response("Not Found", { status: 404 })
       }

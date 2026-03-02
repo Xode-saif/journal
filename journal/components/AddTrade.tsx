@@ -9,20 +9,15 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog"
 import {
     Field,
-    FieldDescription,
     FieldGroup,
     FieldLabel,
 } from "@/components/ui/field"
 import {
     InputGroup,
-    InputGroupAddon,
-    InputGroupButton,
     InputGroupInput,
-    InputGroupText,
     InputGroupTextarea,
 } from "@/components/ui/input-group"
 import { Input } from './ui/input'
@@ -30,7 +25,7 @@ import { Input } from './ui/input'
 interface Props {
     visible: boolean;
     onCancel: () => void;
-    selectedDate: Date;
+    selectedDate: Date | undefined;
 }
 const AddTrade = ({ visible, onCancel, selectedDate }: Props) => {
     const handleAddTrade = (e: React.FormEvent<HTMLFormElement>) => {
@@ -49,7 +44,7 @@ const AddTrade = ({ visible, onCancel, selectedDate }: Props) => {
         const reason = formData.get('reason')
         const picture = formData.get('picture')
         console.log(time, pair, price, sl, profit, slpips, rr, slmoney, result, rrachieved, reason, picture, selectedDate);
-
+        
 
     }
     return (
